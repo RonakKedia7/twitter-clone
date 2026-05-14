@@ -1,15 +1,15 @@
-import { Schema, model, models } from "mongoose";
+import mongoose from "mongoose";
 
-const notificationSchema = new Schema(
+const notificationSchema = new mongoose.Schema(
   {
     from: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
 
     to: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
       index: true,
@@ -22,13 +22,13 @@ const notificationSchema = new Schema(
     },
 
     post: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Post",
       default: null,
     },
 
     comment: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
       default: null,
     },
@@ -46,6 +46,7 @@ const notificationSchema = new Schema(
 notificationSchema.index({ to: 1, createdAt: -1 });
 
 const Notification =
-  models.Notification || model("Notification", notificationSchema);
+  mongoose.models.Notification ||
+  mongoose.model("Notification", notificationSchema);
 
 export default Notification;
