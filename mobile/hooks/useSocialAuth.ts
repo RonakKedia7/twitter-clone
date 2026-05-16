@@ -1,4 +1,6 @@
+import * as Linking from "expo-linking";
 import { useSSO } from "@clerk/expo";
+import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert } from "react-native";
 
@@ -10,6 +12,7 @@ export const useSocialAuth = () => {
   );
 
   const { startSSOFlow } = useSSO();
+  const router = useRouter();
 
   const handleSocialAuth = async (strategy: OAuthStrategy) => {
     if (loadingProvider) return;
@@ -17,12 +20,16 @@ export const useSocialAuth = () => {
     setLoadingProvider(strategy);
 
     try {
+      const redirectUrl = Linking.createURL("sso-callback");
+
       const { createdSessionId, setActive } = await startSSOFlow({
         strategy,
+        redirectUrl,
       });
 
       if (createdSessionId && setActive) {
         await setActive({ session: createdSessionId });
+        router.replace("/");
       }
     } catch (error) {
       console.log("Error in social auth", error);
