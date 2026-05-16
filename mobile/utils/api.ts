@@ -9,9 +9,6 @@ export const createApiClient = (
   api.interceptors.request.use(async (config) => {
     const token = await getToken();
 
-    console.log("Token:", token);
-    console.log("API URL:", config.baseURL, config.url);
-
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
