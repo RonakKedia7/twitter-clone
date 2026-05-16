@@ -15,7 +15,6 @@ export const TRENDING_TOPICS = [
 ];
 
 export const CATEGORIES = [
-  "For you",
   "Cricket",
   "Politics",
   "Technology",
