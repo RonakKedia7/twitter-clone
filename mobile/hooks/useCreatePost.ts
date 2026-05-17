@@ -60,13 +60,26 @@ export const useCreatePost = () => {
       return response.data;
     },
 
-    onSuccess: async () => {
+    onSuccess: (data) => {
       setContent("");
       setSelectedImage(null);
 
-      await queryClient.invalidateQueries({
-        queryKey: ["posts"],
+      const createdPost = data.post || data;
+
+      queryClient.setQueryData(["posts"], (oldData: any) => {
+        if (!oldData) return oldData;
+
+        if (Array.isArray(oldData)) {
+          return [createdPost, ...oldData];
+        }
+
+        return {
+          ...oldData,
+          posts: [createdPost, ...(oldData.posts || [])],
+        };
       });
+
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
 
       Alert.alert("Success", "Post created successfully!");
     },
