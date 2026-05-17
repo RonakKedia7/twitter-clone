@@ -1,9 +1,10 @@
 import { View, Text, ActivityIndicator, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { usePosts } from "@/hooks/usePost";
 import { Post } from "@/types";
 import PostCard from "./PostCard";
+import CommentsModal from "./CommentsModal";
 
 const PostList = () => {
   const { currentUser } = useCurrentUser();
@@ -16,6 +17,11 @@ const PostList = () => {
     deletePost,
     checkIsLiked,
   } = usePosts();
+  const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
+
+  const selectedPost = selectedPostId
+    ? posts.find((p: Post) => p._id === selectedPostId)
+    : null;
 
   if (isLoading) {
     return (
@@ -41,9 +47,11 @@ const PostList = () => {
   }
 
   if (posts.length === 0) {
-    <View className="p-8 items-center">
-      <Text className="text-gray-500">No posts yet</Text>
-    </View>;
+    return (
+      <View className="p-8 items-center">
+        <Text className="text-gray-500">No posts yet</Text>
+      </View>
+    );
   }
   return (
     <>
@@ -55,8 +63,14 @@ const PostList = () => {
           onDelete={deletePost}
           currentUser={currentUser}
           isLiked={checkIsLiked(post.likes, currentUser)}
+          onComment={(post: Post) => setSelectedPostId(post._id)}
         />
       ))}
+
+      <CommentsModal
+        selectedPost={selectedPost}
+        onClose={() => setSelectedPostId(null)}
+      />
     </>
   );
 };
