@@ -49,7 +49,10 @@ const SearchScreen = () => {
         </View>
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={{ paddingBottom: 80 }}
+        showsVerticalScrollIndicator={false}
+      >
         <View className="py-3 border-b border-gray-100">
           <ScrollView
             horizontal

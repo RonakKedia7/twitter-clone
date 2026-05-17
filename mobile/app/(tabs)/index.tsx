@@ -1,14 +1,22 @@
-import { Text } from "react-native";
+import { ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import SignOutButton from "@/components/SignOutButton";
 import { useUserSync } from "@/hooks/useUserSync";
+import Header from "@/components/home/Header";
+import PostComposer from "@/components/home/PostComposer";
 
 const HomeScreen = () => {
   useUserSync();
   return (
     <SafeAreaView className="flex-1">
-      <Text>HomeScreen</Text>
-      <SignOutButton />
+      <Header />
+
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        className="flex-1"
+        contentContainerStyle={{ paddingBottom: 80 }}
+      >
+        <PostComposer />
+      </ScrollView>
     </SafeAreaView>
   );
 };

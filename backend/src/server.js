@@ -25,12 +25,9 @@ app.get("/", (req, res) => {
   });
 });
 
-// public/auth/user routes first
-app.use("/api/users", userRoutes);
-
-// protect other routes with Arcjet
 app.use(arcjetMiddleware);
 
+app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/notifications", notificationRoutes);

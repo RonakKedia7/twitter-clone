@@ -3,6 +3,10 @@ import { aj } from "../config/arcjet.js";
 
 export const arcjetMiddleware = async (req, res, next) => {
   try {
+    if (req.auth && req.auth.userId) {
+      return next();
+    }
+
     const decision = await aj.protect(req, {
       requested: 1,
     });
