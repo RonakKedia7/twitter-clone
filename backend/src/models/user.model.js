@@ -26,8 +26,8 @@ const userSchema = new mongoose.Schema(
 
     lastName: {
       type: String,
-      required: true,
       trim: true,
+      default: "",
     },
 
     username: {
