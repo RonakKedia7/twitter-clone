@@ -8,32 +8,26 @@
     "scheme": "twitter",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ronakkedia.twitter"
     },
-
     "android": {
       "package": "com.ronakkedia.twitter",
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-
       "adaptiveIcon": {
         "foregroundImage": "./assets/branding/adaptive-icon.png",
         "backgroundColor": "#000000"
       }
     },
-
     "web": {
       "output": "static",
       "favicon": "./assets/branding/favicon.png",
       "bundler": "metro"
     },
-
     "plugins": [
       "expo-router",
-
       [
         "expo-splash-screen",
         {
@@ -47,14 +41,19 @@
           }
         }
       ],
-
       "expo-web-browser",
-      "expo-secure-store"
+      "expo-secure-store",
+      "./plugins/withAndroidPackaging"
     ],
-
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "631b0c3b-3276-4dc1-bddb-9e31b3ad06f2"
+      }
     }
   }
 }
