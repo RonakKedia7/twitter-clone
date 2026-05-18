@@ -5,7 +5,7 @@ import {
 import { useNotifications } from "@/hooks/useNotifications";
 import NotificationError from "@/components/notifications/NotificationError";
 import Header from "@/components/notifications/Header";
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { RefreshControl, ScrollView } from "react-native";
 import NoNotificationsFound from "@/components/notifications/NoNotificationsFound";
 import { Notification } from "@/types";
 import Loading from "@/components/notifications/Loading";
@@ -36,6 +36,9 @@ const NotificationScreen = () => {
         className="flex-1"
         contentContainerStyle={{ paddingBottom: 100 + insets.bottom }}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={isRefetching} onRefresh={refetch} />
+        }
       >
         {isLoading ? (
           <Loading />
