@@ -28,6 +28,7 @@ const HomeScreen = () => {
         showsVerticalScrollIndicator={false}
         className="flex-1"
         contentContainerStyle={{ paddingBottom: 80 }}
+        keyboardShouldPersistTaps="always"
         refreshControl={
           <RefreshControl
             refreshing={isRefetching}

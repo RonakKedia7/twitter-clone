@@ -52,6 +52,7 @@ const SearchScreen = () => {
       <ScrollView
         contentContainerStyle={{ paddingBottom: 80 }}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
         <View className="py-3 border-b border-gray-100">
           <ScrollView
