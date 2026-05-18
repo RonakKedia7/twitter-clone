@@ -1,5 +1,8 @@
 import { useLocalSearchParams, router } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 import {
   View,
   Text,
@@ -36,6 +39,7 @@ export default function UserProfileScreen() {
   const isFollowing = currentUser?.following?.includes(user?._id);
   const isOwnProfile = currentUser?._id === user?._id;
   const isRefreshing = isProfileRefetching || isPostsRefetching;
+  const insets = useSafeAreaInsets();
 
   if (isLoading) {
     return <Loading />;
@@ -54,6 +58,7 @@ export default function UserProfileScreen() {
 
       <ScrollView
         className="flex-1"
+        contentContainerStyle={{ paddingBottom: 100 + insets.bottom }}
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
