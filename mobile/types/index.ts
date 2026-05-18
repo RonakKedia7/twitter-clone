@@ -26,6 +26,7 @@ export interface Post {
 export interface Notification {
   _id: string;
   from: {
+    _id: string;
     username: string;
     firstName: string;
     lastName: string;

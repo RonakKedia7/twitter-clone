@@ -1,6 +1,8 @@
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { Notification } from "@/types";
 import { formatDate } from "@/utils/formatters";
 import { Feather } from "@expo/vector-icons";
+import { router } from "expo-router";
 import { View, Text, Alert, Image, TouchableOpacity } from "react-native";
 
 interface NotificationCardProps {
@@ -54,33 +56,49 @@ const NotificationCard = ({
     );
   };
 
+  const { currentUser } = useCurrentUser();
+
+  const handleProfilePress = () => {
+    const isOwnProfile = notification.from._id === currentUser?._id;
+
+    if (isOwnProfile) {
+      router.push("/(tabs)/profile");
+    } else {
+      router.push(`/users/${notification.from.username}`);
+    }
+  };
 
   return (
     <View className="border-b border-gray-100 bg-white">
       <View className="flex-row p-4">
-        <View className="relative mr-3">
+        <TouchableOpacity
+          className="relative mr-3"
+          onPress={handleProfilePress}
+        >
           <Image
             source={{ uri: notification.from.profilePicture }}
             className="size-12 rounded-full"
           />
 
-          <View className="abolute -bottom-1 -right-1 size-6 bg-white items-center justify-center">
+          <View className="absolute -bottom-1 -right-1 size-6 bg-white items-center justify-center rounded-full">
             {getNotificationIcon()}
           </View>
-        </View>
+        </TouchableOpacity>
 
         <View className="flex-1">
           <View className="flex-row items-start justify-between mb-1">
             <View className="flex-1">
-              <Text className="text-gray-900 text-base leading-5 mb-1">
-                <Text className="font-semibold">
-                  {notification.from.firstName} {notification.from.lastName}
+              <TouchableOpacity onPress={handleProfilePress}>
+                <Text className="text-gray-900 text-base leading-5 mb-1">
+                  <Text className="font-semibold">
+                    {notification.from.firstName} {notification.from.lastName}
+                  </Text>
+                  <Text className="text-gray-500">
+                    {" "}
+                    @{notification.from.username}
+                  </Text>
                 </Text>
-                <Text className="text-gray-500">
-                  {" "}
-                  @{notification.from.username}
-                </Text>
-              </Text>
+              </TouchableOpacity>
               <Text className="text-gray-700 text-sm mb-2">
                 {getNotificationText()}
               </Text>
